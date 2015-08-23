@@ -36,8 +36,34 @@ let ListStore = _.extend({}, EventEmitter.prototype, {
         }
     ],
 
-    getItems: function () {
+    getItems: function getItems() {
         return this.items;
+    },
+
+    addItem: function addItem(item) {
+        return this.items.push(item);
+    },
+
+        removeItem: function removeItem(id) {
+        let items = this.items;
+
+        _.remove(items, (item) => {
+            return item.id == id;
+        });
+
+        this.items = items;
+    },
+
+    emitChange: function emitChange() {
+        this.emit('change');
+    },
+
+    addChangeListener: function addChangeListener(callback) {
+        this.on('change', callback);
+    },
+
+    removeChangeListener: function removeChangeListener(callback) {
+        this.removeListener('change', callback);
     }
 });
 
